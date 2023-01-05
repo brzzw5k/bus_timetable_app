@@ -29,9 +29,15 @@ exports.updateBusStops = () => {
 
             var busStops = []
             for (var busStopData of latestBusStopData.stops) {
+                if (busStopData.stopName == null) {
+                    continue;
+                }
+                if (busStopData.stopCode == null) {
+                    continue;
+                }
                 var busStop = {
                     id: busStopData.stopId,
-                    name: busStopData.stopName,
+                    name: busStopData.stopName + ' - ' + busStopData.stopCode,
                 }
                 busStops.push(busStop)
             }

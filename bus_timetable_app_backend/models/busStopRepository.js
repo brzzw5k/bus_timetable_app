@@ -4,9 +4,11 @@ exports.updateBusStops = async (bus_stops) => {
     // await BusStop.deleteMany({}).exec();
     for (var i = 0; i < bus_stops.length; i++) {
         try {
-            if (bus_stops[i].id == null && bus_stops[i].name != null) {
-                await BusStop.updateOne({ id: bus_stops[i].id }, bus_stops[i], { upsert: true }).exec();
-            }
+            await BusStop.updateOne(
+                { id: bus_stops[i].id }, 
+                bus_stops[i], 
+                { upsert: true }
+            ).exec();
         }
         catch (err) {
             console.log(err.message);
