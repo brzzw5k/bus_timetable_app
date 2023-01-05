@@ -73,8 +73,8 @@ exports.getUserBusStops = async (req, res) => {
 
 exports.addUserBusStop = async (req, res) => {
     try {
-        const user = await addUserBusStop(req.params.userLogin, req.user.token, req.params.busStopId);
-        res.status(200).send(user);
+        const bus_stops = await addUserBusStop(req.params.userLogin, req.params.busStopId);
+        res.status(200).send(bus_stops);
     }
     catch (err) {
         console.error(err)
@@ -84,8 +84,8 @@ exports.addUserBusStop = async (req, res) => {
 
 exports.deleteUserBusStop = async (req, res) => {
     try {
-        const user = await deleteUserBusStop(req.params.userLogin, req.user.token, req.params.busStopId);
-        res.status(200).send(user);
+        const bus_stops = await deleteUserBusStop(req.params.userLogin, req.params.busStopId);
+        res.status(200).send(bus_stops);
     }
     catch (err) {
         console.error(err)

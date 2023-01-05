@@ -36,37 +36,25 @@ exports.createUser = async (login, password) => {
 
 exports.findUserBusStops = async (login, token) => {
     var user = await exports.findUserByLogin(login);
-    if (user.token != token) {
-        throw Error("Cannot view " + login + "'s bus stops: invalid token");
-    }
-    var bus_stops = await findBusStopsByIds(user.saved_bus_stops);
-    
+    const bus_stops = await findBusStopsByIds(user.saved_bus_stops);
     return bus_stops;
 }
 
-exports.addUserBusStop = async (login, token, bus_stop_id) => {
+exports.addUserBusStop = async (login, bus_stop_id) => {
     var user = await exports.findUserByLogin(login);
-    if (user.token != token) {
-        throw Error("Cannot view " + login + "'s bus stops: invalid token");
-    }
-    var bus_stop = await findBusStopById(bus_stop_id);
-    if (user.saved_bus_stops.includes(bus_stop.id)) {
-        throw Error("Bus stop already saved");
-    }
-    user.saved_bus_stops.push(bus_stop.id);
+    user.saved_bus_stops.push(bus_stop_id);
 
-    var _user = await user.save();
-    return _user;
+    await user.save();
+    const bus_stops = await findBusStopsByIds(user.saved_bus_stops);
+    return bus_stops;
 }
 
-exports.deleteUserBusStop = async (login, token, bus_stop_id) => {
+exports.deleteUserBusStop = async (login, bus_stop_id) => {
     var user = await exports.findUserByLogin(login);
-    if (user.token != token) {
-        throw Error("Cannot view " + login + "'s bus stops: invalid token");
-    }
     var bus_stop = await findBusStopById(bus_stop_id);
     user.saved_bus_stops.pull(bus_stop.id);
 
-    var _user = await user.save();
-    return _user;
+    await user.save();
+    const bus_stops = await findBusStopsByIds(user.saved_bus_stops);
+    return bus_stops;
 }

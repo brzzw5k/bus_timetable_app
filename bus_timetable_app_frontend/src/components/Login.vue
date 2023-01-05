@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { BACKEND_URL } from '../config'
 
 export default {
@@ -28,7 +27,7 @@ export default {
   },
   methods: {
     login () {
-      axios
+      this.$http
         .post(BACKEND_URL + '/api/login', {
           login: this.username,
           password: this.password
